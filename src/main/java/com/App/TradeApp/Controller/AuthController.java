@@ -123,16 +123,32 @@ public class AuthController {
     }
 
     @PostMapping("/two-factor/otp/{otp}")
-    public ResponseEntity<AuthResponse> verifySigninOTP(@PathVariable String otp, @RequestParam String id){
-
+    public ResponseEntity<AuthResponse> verifySigninOTP(@PathVariable String otp, @RequestParam String id) {
         TwoFactorOTP twoFactorOTP = twoFactorOtpService.findById(id);
-        if(twoFactorOtpService.verifyTwoFactorOtp(twoFactorOTP,otp)) {
+
+        if (twoFactorOTP == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid session ID");
+        }
+
+        if (twoFactorOtpService.verifyTwoFactorOtp(twoFactorOTP, otp)) {
+            // Generate final JWT after successful OTP verification
+            Authentication auth = new UsernamePasswordAuthenticationToken(
+                    twoFactorOTP.getUser(), null, twoFactorOTP.getUser().getAuthorities()
+            );
+            String jwt = JwtProvider.generateToken(auth);
+
             AuthResponse res = new AuthResponse();
             res.setMessage("Success");
             res.setTwoFactorAuthEnabled(true);
-            res.setJwt(twoFactorOTP.getJwt());
+            res.setJwt(jwt);
+
+            // Delete OTP after successful verification
+            twoFactorOtpService.deleteTwoFactorOtp(twoFactorOTP);
+
             return new ResponseEntity<>(res, HttpStatus.OK);
         }
+
         throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Invalid OTP");
     }
+
 }

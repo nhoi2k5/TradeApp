@@ -30,7 +30,7 @@ public class TwoFactorOTP {
         this.otp = otp;
     }
 
-    public Authentication getUser() {
+    public User getUser() {
         return user;
     }
 

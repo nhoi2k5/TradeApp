@@ -1,3 +1,4 @@
+package com.App.TradeApp.Model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
@@ -5,6 +6,10 @@ import jakarta.persistence.*;
 
 @Entity
 public class OrderItem {
+
+    public OrderItem(Long id, Double quantity, Coin coin, double buyPrice, double sellPrice, Order order) {
+        this.id = id;
+        this.quantity = quantity;
         this.coin = coin;
         this.buyPrice = buyPrice;
         this.sellPrice = sellPrice;

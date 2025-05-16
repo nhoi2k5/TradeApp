@@ -5,7 +5,6 @@ import com.App.TradeApp.Model.Coin;
 import com.App.TradeApp.Model.User;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface AssetService {
     Asset createAsset(User user, Coin coin, double quantity);

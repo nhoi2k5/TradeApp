@@ -16,6 +16,10 @@ public class OrderItem {
         this.order = order;
     }
 
+    public OrderItem() {
+
+    }
+
     public Long getId() {
         return id;
     }

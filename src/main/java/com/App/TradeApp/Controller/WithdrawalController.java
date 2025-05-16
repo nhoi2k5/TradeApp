@@ -3,7 +3,6 @@ package com.App.TradeApp.Controller;
 
 import com.App.TradeApp.Model.User;
 import com.App.TradeApp.Model.Wallet;
-import com.App.TradeApp.Model.WalletTransaction;
 import com.App.TradeApp.Model.Withdrawal;
 import com.App.TradeApp.Service.UserService;
 import com.App.TradeApp.Service.WalletService;
